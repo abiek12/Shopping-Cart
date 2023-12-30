@@ -1,0 +1,44 @@
+<!-- View Products -->
+<section>
+  <div class="container mt-5">
+    <div class="row my-5">
+      <div class="col-md-2 text-primary fw-bold fs-3">All Products</div>
+      <a
+        href="/admin/add-product"
+        class="col-md-2 btn btn-primary fw-bold ms-auto"
+        >Add Products</a
+      >
+    </div>
+    <table class="table table-hover">
+      <thead class="text-primary">
+        <tr>
+          <th scope="col">No</th>
+          <th scope="col">Title</th>
+          <th scope="col">Image</th>
+          <th scope="col">category</th>
+          <th scope="col">Description</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% products.forEach((product)=>{%>
+        <tr>
+          <th scope="row"><%=product.no%></th>
+          <td><%=product.name%></td>
+          <td>
+            <img
+              style="width: 50px; height: 50px"
+              src="<%=product.image%>"
+              alt=""
+              srcset=""
+            />
+          </td>
+          <td><%=product.category%></td>
+          <td style="width: 500px"><%=product.description%></td>
+          <td><%=product.price%></td>
+        </tr>
+        <%})%>
+      </tbody>
+    </table>
+  </div>
+</section>
