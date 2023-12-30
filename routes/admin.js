@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const productHelper = require("../helpers/product-helpers");
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -48,10 +49,13 @@ router.get("/add-product", (req, res) => {
   res.render("../views/admin/add-product.ejs", { admin: true });
 });
 
-router.post("/add-product",(req,res)=>{
-  res.send("Product added")
-  console.log(req.body);          
-  console.log(req.files.Image);
-})
+router.post("/add-product", (req, res) => {
+  // console.log(req.body);
+  // console.log(req.files.Image);
+  productHelper.addProduct(req.body,(result)=>{
+    console.log("Successfully Added.");
+    res.render("../views/admin/add-product.ejs",{ admin: true })
+  });
+});
 
 module.exports = router;

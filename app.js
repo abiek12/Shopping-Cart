@@ -4,8 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const layout = require("express-ejs-layouts");
-var fileUpload = require("express-fileupload");
-
+const fileUpload = require("express-fileupload");
+const {connectToMongo}=require("./config/connection");
 var userRouter = require("./routes/user");
 var adminRouter = require("./routes/admin");
 
@@ -24,8 +24,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(fileUpload());
+
+//Database connection 
+connectToMongo()
 app.use("/", userRouter);
 app.use("/admin", adminRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
