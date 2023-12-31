@@ -50,9 +50,15 @@ router.get("/add-product", (req, res) => {
 });
 
 router.post("/add-product", (req, res) => {
-  // console.log(req.body);
-  // console.log(req.files.Image);
-  productHelper.addProduct(req.body,(result)=>{
+  productHelper.addProduct(req.body,(id)=>{
+    let image=req.files.Image;
+    image.mv("./public/product-images/"+id+".jpg",(err,done)=>{
+      if(!err){
+        res.render("../views/admin/add-product.ejs")
+      } else{
+        console.error(err);
+      }
+    })
     console.log("Successfully Added.");
     res.render("../views/admin/add-product.ejs",{ admin: true })
   });
