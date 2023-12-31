@@ -24,18 +24,18 @@
         <% products.forEach((product)=>{%>
         <tr>
           <th scope="row"><%=product.no%></th>
-          <td><%=product.name%></td>
+          <td><%=product.Name%></td>
           <td>
             <img
               style="width: 50px; height: 50px"
-              src="<%=product.image%>"
+              src="/product-images/<%=product._id%>.jpg"
               alt=""
               srcset=""
             />
           </td>
-          <td><%=product.category%></td>
-          <td style="width: 500px"><%=product.description%></td>
-          <td><%=product.price%></td>
+          <td><%=product.Category%></td>
+          <td style="width: 500px"><%=product.Description%></td>
+          <td><%=product.Price%></td>
         </tr>
         <%})%>
       </tbody>
