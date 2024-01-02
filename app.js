@@ -3,9 +3,11 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-const layout = require("express-ejs-layouts");
-const fileUpload = require("express-fileupload");
-const {connectToMongo}=require("./config/connection");
+var layout = require("express-ejs-layouts");
+var fileUpload = require("express-fileupload");
+var {connectToMongo}=require("./config/connection");
+var session = require('express-session')
+
 var userRouter = require("./routes/user");
 var adminRouter = require("./routes/admin");
 
@@ -22,8 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
 app.use(fileUpload());
+app.use(session({
+  secret: "cartkey", // Replace with your secret
+  resave: false, // False, if you don't want to save session if unmodified
+  saveUninitialized: false, // False, if you don't want to initialize a session until something is stored
+  cookie: { maxAge: 600000 } // Set your cookie options
+}));
+
 
 //Database connection 
 connectToMongo()

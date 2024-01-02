@@ -1,0 +1,52 @@
+<section>
+  <div class="container">
+    <div class="row mt-5">
+      <div class="col-lg-4 col-md-6 col-sm-8 col-9 mx-auto">
+        <div class="text-center mb-5">
+          <h1 class="text-primary">Sign In</h1>
+        </div>
+        <form action="/signup" method="post">
+          <div class="mb-3">
+            <label for="nameInput" class="form-label">Name</label>
+            <input
+              type="text"
+              placeholder="Name"
+              class="form-control"
+              id="nameInput"
+              name="Name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="emailInput" class="form-label">Email or Phone</label>
+            <input
+              type="email"
+              placeholder="Email or Phone"
+              class="form-control"
+              id="emailInput"
+              name="Email"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="passwordInput" class="form-label">Password</label>
+            <input
+              type="password"
+              placeholder="Password"
+              class="form-control"
+              id="passwordInput"
+              name="Password"
+            />
+          </div>
+          <div
+            class="d-flex justify-content-between mb-4"
+            style="font-size: 0.85rem"
+          >
+            <a href="/login" class="text-decoration-none">Already have an Account ?</a>
+          </div>
+          <button type="submit" class="btn btn-primary w-100 fw-bolder">
+            Sign In
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
