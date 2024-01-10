@@ -7,13 +7,13 @@
       </div>
       <a
         href="/admin/add-product"
-        class="col-12 col-sm-3 col-lg-2 btn btn-primary fw-bold"
+        class="btn btn-outline-primary btn btn-outline-primary d-flex justify-content-center align-item-center p-2 col-12 col-sm-3 col-lg-2 fw-bold"
         >Add Products</a
       >
     </div>
     <div class="row">
       <table class="table table-hover">
-        <thead class="text-primary">
+        <thead class="text-dark">
           <tr>
             <th scope="col">No</th>
             <th scope="col">Title</th>
@@ -21,6 +21,7 @@
             <th scope="col">category</th>
             <th scope="col">Description</th>
             <th scope="col">Price</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +40,10 @@
             <td><%=product.Category%></td>
             <td style="width: 500px"><%=product.Description%></td>
             <td><%=product.Price%></td>
+            <td>
+              <a href="/admin/edit-product" class="btn btn-outline-primary d-flex justify-content-center align-item-center p-1 my-2">Edit</a>
+              <a href="/admin/delete-product/<%=product._id%>" class="btn btn-outline-danger d-flex justify-content-center align-item-center p-1 my-2" onclick="return confirm('Are you want to delete <%=product.Name%>')">Delete</a>
+            </td>
           </tr>
           <%})%>
         </tbody>

@@ -1,5 +1,6 @@
 const { connectToMongo,getDb } = require("../config/connection");
 const collection=require("../config/collections");
+const { ObjectId } = require("mongodb");
 
 module.exports = {
   //function to add product to database
@@ -16,5 +17,11 @@ module.exports = {
         let products=await db.collection(collection.PRODUCT_COLLECTION).find().toArray()
         callback(products)
       })
+  },
+  deleteProduct:(productId,callback)=>{
+    getDb().then(async(db)=>{
+      let response= await db.collection(collection.PRODUCT_COLLECTION).deleteOne({_id:new ObjectId(productId)})
+      callback(response)
+    })
   }
 };
