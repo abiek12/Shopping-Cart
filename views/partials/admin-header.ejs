@@ -1,5 +1,5 @@
 <!-- Admin Header -->
-<header>
+<!-- <header>
   <nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand text-white fs-4 fw-bold mx-4" href="#"
@@ -29,25 +29,6 @@
           <li class="nav-item">
             <a class="nav-link text-white mx-2" href="#">All Orders</a>
           </li>
-          <!-- <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle text-white mx-2"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              All users
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li> -->
           <li class="nav-item">
             <a class="nav-link text-white mx-2">All users</a>
           </li>
@@ -70,4 +51,184 @@
       </div>
     </div>
   </nav>
+</header> -->
+
+<style>
+  input {
+    height: 2em;
+  }
+  .custom-btn {
+    border-color: white;
+    color: white;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+  }
+  .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  }
+  .navbar-toggler {
+    padding: 0;
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(0,0,0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  .offcanvas-header {
+    padding: 1.5rem 2rem 0.5rem 2rem;
+  }
+  .offcanvas-body {
+    padding: 0 2rem;
+  }
+  .offcanvas-body .nav-item:hover {
+    background: #f8f9fa;
+    border-radius: 6px;
+  }
+</style>
+<header>
+  <div class="row">
+    <nav
+      class="navbar navbar-expand-lg bg-light p-3 mb-3 border-bottom fixed-top"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand text-Primary fs-4 fw-bold" href="/"
+          >Shopping Cart</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Offcanvas -->
+        <div
+          class="offcanvas offcanvas-end d-lg-none"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <div class="offcanvas-header">
+            <h3 class="offcanvas-title" id="offcanvasNavbarLabel">
+              Shopping Cart
+            </h3>
+            <button
+              type="button"
+              class="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <hr />
+          <div class="offcanvas-body d-flex flex-column">
+            <ul class="navbar-nav mb-lg-0 mb-auto">
+              <li class="nav-item">
+                <a
+                  class="nav-link active text-dark my-2 p-2"
+                  aria-current="page"
+                  href="#"
+                  >All Products</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark my-2 p-2" href="#">All Orders</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark my-2 p-2" href="#">All Users</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark my-2 p-2" href="#">Settings</a>
+              </li>
+            </ul>
+            <div class="dropup my-4">
+              <a
+                href="#"
+                class="link-dark text-decoration-none dropdown-toggle"
+                id="dropdownUser1"
+                data-bs-toggle="dropdown"
+                data-bs-auto-close="true"
+                aria-expanded="false"
+              >
+                <img
+                  src="./images/user.png"
+                  alt="profile-img"
+                  srcset=""
+                  class="me-2"
+                />
+                <%if(locals.user){%> <%=user.Name%> <%}else{%> Account <%}%>
+              </a>
+              <ul
+                class="dropdown-menu text-small shadow"
+                aria-labelledby="dropdownUser1"
+              >
+                <%if(locals.user){%>
+                <li><a class="dropdown-item" href="#">Profile Settings</a></li>
+                <li><a class="dropdown-item" href="#">Log out</a></li>
+                <%}else{%>
+                <li><a class="dropdown-item" href="#">Log in</a></li>
+                <%}%>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Nav items for Large Screens -->
+        <div class="col-md-5 d-none d-lg-block">
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active text-dark mx-2"
+                aria-current="page"
+                href="#"
+                >All Products</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark mx-2" href="#">All Orders</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark mx-2">All users</a>
+            </li>
+          </ul>
+        </div>
+        <!-- Search Form for Large Screens -->
+        <form class="col-md-3 d-none d-lg-block">
+          <input
+            class="form-control"
+            type="search"
+            placeholder="Search for Products, Brand and More"
+            aria-label="Search"
+          />
+        </form>
+        <!-- Drop down Profile icon for large screen -->
+        <div class="dropdown col-md-2 text-end d-none d-lg-block">
+          <a
+            href="#"
+            class="link-dark text-decoration-none dropdown-toggle"
+            id="dropdownUser1"
+            data-bs-auto-close="true"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="./images/user.png"
+              alt="profile-img"
+              srcset=""
+              class="me-2"
+            />
+            <%if(locals.user){%> <%=user.Name%> <%}else{%> Account <%}%>
+          </a>
+          <ul
+            class="dropdown-menu text-small dropdown-menu-end shadow"
+            aria-labelledby="dropdownUser1"
+          >
+            <%if(locals.user){%>
+            <li><a class="dropdown-item" href="#">Profile Settings</a></li>
+            <li><a class="dropdown-item" href="#">Log out</a></li>
+            <%}else{%>
+            <li><a class="dropdown-item" href="#">Log in</a></li>
+            <%}%>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
 </header>
