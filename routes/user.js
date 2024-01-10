@@ -29,7 +29,15 @@ router.post("/signup", (req, res) => {
 
 /* GET login page. */
 router.get("/login", (req, res) => {
-  res.render("../views/user/login.ejs", { admin: false });
+  if (req.session.loggedIn) {
+    res.redirect("/");
+  } else {
+    res.render("../views/user/login.ejs", {
+      admin: false,
+      loggedInErr: req.session.loggedInErr,
+    });
+    req.session.loggedInErr = null;
+  }
 });
 
 /* POST login page. */
@@ -42,6 +50,7 @@ router.post("/login", (req, res) => {
         req.session.user = response.user;
         res.redirect("/");
       } else {
+        req.session.loggedInErr = "Invalid email or password !";
         res.redirect("/login");
       }
     })
