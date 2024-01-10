@@ -2,9 +2,10 @@ var express = require("express");
 var router = express.Router();
 var productHelpers = require("../helpers/product-helpers");
 var userHelpers = require("../helpers/user-helpers");
+const auth = require("../middlewares/auth");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
+router.get("/", function (req, res) {
   let user = req.session.user;
   productHelpers.getAllProducts((products) => {
     res.render("../views/user/view-products.ejs", {
@@ -65,5 +66,11 @@ router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/");
 });
+
+/* GET product page. */
+router.get("/cart",auth,(req,res)=>{
+  let user=req.session.user
+  res.render("../views/user/cart.ejs",{user})
+})
 
 module.exports = router;
