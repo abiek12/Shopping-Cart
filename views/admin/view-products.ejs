@@ -41,7 +41,7 @@
             <td style="width: 500px"><%=product.Description%></td>
             <td><%=product.Price%></td>
             <td>
-              <a href="/admin/edit-product" class="btn btn-outline-primary d-flex justify-content-center align-item-center p-1 my-2">Edit</a>
+              <a href="/admin/edit-product/<%=product._id%>" class="btn btn-outline-primary d-flex justify-content-center align-item-center p-1 my-2">Edit</a>
               <a href="/admin/delete-product/<%=product._id%>" class="btn btn-outline-danger d-flex justify-content-center align-item-center p-1 my-2" onclick="return confirm('Are you want to delete <%=product.Name%>')">Delete</a>
             </td>
           </tr>

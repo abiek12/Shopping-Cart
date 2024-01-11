@@ -34,10 +34,16 @@ router.post("/add-product", (req, res) => {
 //GET Delete products
 router.get("/delete-product/:id", (req, res) => {
   let productId = req.params.id;
-  productHelpers.deleteProduct(productId,(response)=>{
+  productHelpers.deleteProduct(productId, (response) => {
     console.log(response);
-    res.redirect("/admin")
-  })
+    res.redirect("/admin");
+  });
 });
 
+//GET Edit Products
+router.get("/edit-product/:id", async (req, res) => {
+  await productHelpers.getProductDetails(req.params.id, (product) => {
+    res.render("../views/admin/edit-product.ejs", { product });
+  });
+});
 module.exports = router;
