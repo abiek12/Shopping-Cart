@@ -35,8 +35,24 @@ module.exports = {
     getDb().then(async (db) => {
       let product = await db
         .collection(collection.PRODUCT_COLLECTION)
-        .findOne({ _id:new ObjectId(productId) });
+        .findOne({ _id: new ObjectId(productId) });
       callback(product);
+    });
+  },
+  updateProduct: (productId, productDetails, callback) => {
+    getDb().then(async (db) => {
+      let result = await db.collection(collection.PRODUCT_COLLECTION).updateOne(
+        { _id: new ObjectId(productId) },
+        {
+          $set: {
+            Name: productDetails.Name,
+            Description: productDetails.Description,
+            Price: productDetails.Price,
+            Category: productDetails.Category,
+          },
+        }
+      );
+      callback(result);
     });
   },
 };

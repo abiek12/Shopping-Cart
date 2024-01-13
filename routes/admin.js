@@ -35,7 +35,6 @@ router.post("/add-product", (req, res) => {
 router.get("/delete-product/:id", (req, res) => {
   let productId = req.params.id;
   productHelpers.deleteProduct(productId, (response) => {
-    console.log(response);
     res.redirect("/admin");
   });
 });
@@ -44,6 +43,18 @@ router.get("/delete-product/:id", (req, res) => {
 router.get("/edit-product/:id", async (req, res) => {
   await productHelpers.getProductDetails(req.params.id, (product) => {
     res.render("../views/admin/edit-product.ejs", { product });
+  });
+});
+
+//POST Edit Products
+router.post("/edit-product/:id", async (req, res) => {
+  let productId = req.params.id;
+  await productHelpers.updateProduct(productId, req.body, () => {
+    res.redirect("/admin");
+    if (req.files.Image) {
+      let image = req.files.Image;
+      image.mv("./public/product-images/" + productId + ".jpg");
+    }
   });
 });
 module.exports = router;
