@@ -24,6 +24,8 @@ router.get("/signup", (req, res) => {
 /* POST signup page. */
 router.post("/signup", (req, res) => {
   userHelpers.doSignup(req.body).then((id) => {
+    req.session.loggedIn = true;
+    req.session.user = id;
     res.redirect("/login");
   });
 });
@@ -68,9 +70,9 @@ router.get("/logout", (req, res) => {
 });
 
 /* GET product page. */
-router.get("/cart",auth,(req,res)=>{
-  let user=req.session.user
-  res.render("../views/user/cart.ejs",{user})
-})
+router.get("/cart", auth, (req, res) => {
+  let user = req.session.user;
+  res.render("../views/user/cart.ejs", { user });
+});
 
 module.exports = router;
