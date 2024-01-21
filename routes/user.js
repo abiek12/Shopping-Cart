@@ -72,7 +72,17 @@ router.get("/logout", (req, res) => {
 /* GET product page. */
 router.get("/cart", auth, (req, res) => {
   let user = req.session.user;
+  let products=userHelpers.getCartProduct(req.session.user.id).then(()=>{
+    
+  })
   res.render("../views/user/cart.ejs", { user });
+});
+
+// Get Add to product
+router.get("/add-to-cart/:id", auth, (req, res) => {
+  userHelpers.addToCart(req.params.id, req.session.user._id).then(() => {
+    res.redirect("/cart");
+  });
 });
 
 module.exports = router;

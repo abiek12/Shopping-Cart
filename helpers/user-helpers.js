@@ -2,6 +2,7 @@ const { connectToMongo, getDb } = require("../config/connection");
 const collection = require("../config/collections");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const { ObjectId } = require("mongodb");
 
 module.exports = {
   doSignup: async (userData) => {
@@ -42,6 +43,46 @@ module.exports = {
           resolve({ status: false });
         }
       });
+    });
+  },
+
+  addToCart: (productId, userId) => {
+    return new Promise(async (resolve, reject) => {
+      let db = await getDb();
+      let cart = await db.collection(collection.CART_COLLECTION).findOne({
+        user: new ObjectId(userId),
+      });
+      if (cart) {
+        getDb().then((db) => {
+          db.collection(collection.CART_COLLECTION)
+            .updateOne(
+              { user: new ObjectId(userId) },
+              {
+                $push: { products: new ObjectId(productId) },
+              }
+            )
+            .then(() => {
+              resolve();
+            });
+        });
+      } else {
+        getDb().then((db) => {
+          db.collection(collection.CART_COLLECTION)
+            .insertOne({
+              user: new ObjectId(userId),
+              products: [new ObjectId(productId)],
+            })
+            .then(() => {
+              resolve();
+            });
+        });
+      }
+    });
+  },
+  getCartProducts: (userId) => {
+    return new Promise(async (resolve, reject) => {
+      let db = await getDb();
+      db.collection(collection.CART_COLLECTION).findOne({})
     });
   },
 };
