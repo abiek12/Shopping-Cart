@@ -5,13 +5,18 @@ var userHelpers = require("../helpers/user-helpers");
 const auth = require("../middlewares/auth");
 
 /* GET home page. */
-router.get("/", function (req, res) {
+router.get("/", async function (req, res) {
   let user = req.session.user;
+  let CartproductCount = null;
+  if (user) {
+    CartproductCount = await userHelpers.getCartProductCount(user._id);
+  }
   productHelpers.getAllProducts((products) => {
     res.render("../views/user/view-products.ejs", {
       products,
       admin: false,
       user,
+      CartproductCount,
     });
   });
 });
