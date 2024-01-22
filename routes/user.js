@@ -73,9 +73,8 @@ router.get("/logout", (req, res) => {
 router.get("/cart", auth, (req, res) => {
   let user = req.session.user;
   userHelpers.getCartProducts(user._id).then((products) => {
-    console.log(products);
+    res.render("../views/user/cart.ejs", { products, user });
   });
-  res.render("../views/user/cart.ejs", { user });
 });
 
 // Get Add to product

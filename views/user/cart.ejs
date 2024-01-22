@@ -1,1 +1,43 @@
-<h1 class="mt-5 pt-5">Cart</h1>
+<!-- cart page -->
+<section>
+  <div class="container mt-5 pt-5">
+    <div class="row">
+      <div class="col-8 bg-light rounded-3">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3">Details</th>
+              <th scope="col" class="p-3">Quantity</th>
+              <th scope="col" class="py-3">Remove</th>
+              <th scope="col" class="py-3">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <%products.forEach((product)=>{%>
+            <tr>
+              <td class="py-3">
+                <img
+                  style="width: 50px; height: 50px; border-radius: 5px;"
+                  src="/product-images/<%=product._id%>.jpg"
+                  alt=""
+                  srcset=""
+                />
+                <%=product.Name%>
+              </td>
+              <td class="py-4">
+              <button type="button" class="btn btn-primary custom-btn mx-2">+</button>
+              1
+              <button type="button" class="btn btn-dark custom-btn mx-2">-</button>
+              </td>
+              <td class="py-4">
+              <button type="button" class="btn btn-dark custom-btn mx-2">x</button>
+              </td>
+              <td class="py-4"><%=product.Price%></td>
+            </tr>
+          </tbody>
+          <%})%>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
