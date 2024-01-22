@@ -72,9 +72,9 @@ router.get("/logout", (req, res) => {
 /* GET product page. */
 router.get("/cart", auth, (req, res) => {
   let user = req.session.user;
-  let products=userHelpers.getCartProduct(req.session.user.id).then(()=>{
-    
-  })
+  userHelpers.getCartProducts(user._id).then((products) => {
+    console.log(products);
+  });
   res.render("../views/user/cart.ejs", { user });
 });
 

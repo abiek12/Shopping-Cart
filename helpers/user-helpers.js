@@ -82,7 +82,31 @@ module.exports = {
   getCartProducts: (userId) => {
     return new Promise(async (resolve, reject) => {
       let db = await getDb();
-      db.collection(collection.CART_COLLECTION).findOne({})
+      let cartItems = await db
+        .collection(collection.CART_COLLECTION)
+        .aggregate([
+          {
+            $match: { user: new ObjectId(userId) },
+          },
+          {
+            $lookup: {
+              from: collection.PRODUCT_COLLECTION,
+              let: { prodList: "$products" },
+              pipeline: [
+                {
+                  $match: {
+                    $expr: {
+                      $in: ["$_id", "$$prodList"],
+                    },
+                  },
+                },
+              ],
+              as: "cartItems",
+            },
+          },
+        ])
+        .toArray();
+      resolve(cartItems[0].cartItems);
     });
   },
 };
