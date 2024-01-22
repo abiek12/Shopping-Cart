@@ -78,14 +78,15 @@ router.get("/logout", (req, res) => {
 router.get("/cart", auth, (req, res) => {
   let user = req.session.user;
   userHelpers.getCartProducts(user._id).then((products) => {
+    console.log(products);
     res.render("../views/user/cart.ejs", { products, user });
   });
 });
 
 // Get Add to product
-router.get("/add-to-cart/:id", auth, (req, res) => {
+router.get("/add-to-cart/:id",auth, (req, res) => {
   userHelpers.addToCart(req.params.id, req.session.user._id).then(() => {
-    res.redirect("/cart");
+    res.json({status:true})
   });
 });
 
