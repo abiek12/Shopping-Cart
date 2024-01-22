@@ -27,11 +27,11 @@
         <tbody>
           <% products.forEach((product)=>{%>
           <tr>
-            <th scope="row"><%=product.no%></th>
+            <td scope="row"><%=product.no%></td>
             <td><%=product.Name%></td>
             <td>
               <img
-                style="width: 50px; height: 50px"
+                style="width: 50px; height: 50px; border-radius:5px"
                 src="/product-images/<%=product._id%>.jpg"
                 alt=""
                 srcset=""

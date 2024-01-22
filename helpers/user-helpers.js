@@ -47,30 +47,52 @@ module.exports = {
   },
 
   addToCart: (productId, userId) => {
+    let productObj = {
+      item: new ObjectId(productId),
+      quantity: 1,
+    };
     return new Promise(async (resolve, reject) => {
       let db = await getDb();
       let cart = await db.collection(collection.CART_COLLECTION).findOne({
         user: new ObjectId(userId),
       });
       if (cart) {
-        getDb().then((db) => {
-          db.collection(collection.CART_COLLECTION)
-            .updateOne(
-              { user: new ObjectId(userId) },
-              {
-                $push: { products: new ObjectId(productId) },
-              }
-            )
-            .then(() => {
-              resolve();
-            });
-        });
+        let productExist = cart.products.findIndex(
+          (product) => product.item == productId
+        );
+        if (productExist != -1) {
+          getDb().then((db) => {
+            db.collection(collection.CART_COLLECTION)
+              .updateOne(
+                { "products.item": new ObjectId(productId) },
+                {
+                  $inc: { "products.$.quantity": 1 },
+                }
+              )
+              .then(() => {
+                resolve();
+              });
+          });
+        } else {
+          getDb().then((db) => {
+            db.collection(collection.CART_COLLECTION)
+              .updateOne(
+                { user: new ObjectId(userId) },
+                {
+                  $push: { products: productObj },
+                }
+              )
+              .then(() => {
+                resolve();
+              });
+          });
+        }
       } else {
         getDb().then((db) => {
           db.collection(collection.CART_COLLECTION)
             .insertOne({
               user: new ObjectId(userId),
-              products: [new ObjectId(productId)],
+              products: [productObj],
             })
             .then(() => {
               resolve();
@@ -82,7 +104,45 @@ module.exports = {
   getCartProducts: (userId) => {
     return new Promise(async (resolve, reject) => {
       let db = await getDb();
-      db.collection(collection.CART_COLLECTION).findOne({})
+      let cartItems = await db
+        .collection(collection.CART_COLLECTION)
+        .aggregate([
+          {
+            $match: { user: new ObjectId(userId) },
+          },
+          {
+            $unwind: "$products",
+          },
+          {
+            $project: {
+              item: "$products.item",
+              quantity: "$products.quantity",
+            },
+          },
+          {
+            $lookup: {
+              from: collection.PRODUCT_COLLECTION,
+              localField: "item",
+              foreignField: "_id",
+              as: "productDetails",
+            },
+          },
+        ])
+        .toArray();
+      resolve(cartItems);
+    });
+  },
+  getCartProductCount: (userId) => {
+    return new Promise(async (resolve, reject) => {
+      let db = await getDb();
+      let count = 0;
+      let cart = await db.collection(collection.CART_COLLECTION).findOne({
+        user: new ObjectId(userId),
+      });
+      if (cart) {
+        count = cart.products.length;
+      }
+      resolve(count);
     });
   },
 };

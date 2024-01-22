@@ -1,21 +1,30 @@
 <!-- User products Section -->
 <section>
-    <div class="container mt-5 pt-5">
-      <div class="row">
-        <% products.forEach((product)=>{%>
-        <div class="col-md-3 my-4">
-          <div class="card" style="width: 18rem">
-            <img src="/product-images/<%=product._id%>.jpg" class="card-img-top mx-auto" style="height: 100%; width: 200px;" alt="<%=product.Name%>" />
-            <div class="card-body">
-              <h5 class="card-title"><%=product.Name%></h5>
-              <h5 class="card-title">₹ <%=product.Price%></h5>
-              <p class="card-text"><%=product.Description%></p>
-              <a href="/add-to-cart/<%=product._id%>" class="btn btn-primary">Add to Cart</a>
-            </div>
+  <div class="container mt-5 pt-5">
+    <div class="row">
+      <% products.forEach((product)=>{%>
+      <div class="col-md-3 my-5">
+        <div class="card" style="width: 19rem;">
+          <img
+            src="/product-images/<%=product._id%>.jpg"
+            class="card-img-top mx-auto"
+            style="height: 100%; width: 200px;"
+            alt="<%=product.Name%>"
+          />
+          <div class="card-body">
+            <h5 class="card-title"><%=product.Name%></h5>
+            <h5 class="card-title">₹ <%=product.Price%></h5>
+            <p class="card-text"><%=product.Description%></p>
+            <button
+              class="btn btn-primary"
+              onclick="addToCart('<%=product._id%>')"
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
-        <%})%>
       </div>
+      <%})%>
     </div>
-  </section>
-  
+  </div>
+</section>

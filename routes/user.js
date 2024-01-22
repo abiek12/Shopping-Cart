@@ -5,13 +5,18 @@ var userHelpers = require("../helpers/user-helpers");
 const auth = require("../middlewares/auth");
 
 /* GET home page. */
-router.get("/", function (req, res) {
+router.get("/", async function (req, res) {
   let user = req.session.user;
+  let CartproductCount = null;
+  if (user) {
+    CartproductCount = await userHelpers.getCartProductCount(user._id);
+  }
   productHelpers.getAllProducts((products) => {
     res.render("../views/user/view-products.ejs", {
       products,
       admin: false,
       user,
+      CartproductCount,
     });
   });
 });
@@ -72,16 +77,16 @@ router.get("/logout", (req, res) => {
 /* GET product page. */
 router.get("/cart", auth, (req, res) => {
   let user = req.session.user;
-  let products=userHelpers.getCartProduct(req.session.user.id).then(()=>{
-    
-  })
-  res.render("../views/user/cart.ejs", { user });
+  userHelpers.getCartProducts(user._id).then((products) => {
+    console.log(products);
+    res.render("../views/user/cart.ejs", { products, user });
+  });
 });
 
 // Get Add to product
-router.get("/add-to-cart/:id", auth, (req, res) => {
+router.get("/add-to-cart/:id",auth, (req, res) => {
   userHelpers.addToCart(req.params.id, req.session.user._id).then(() => {
-    res.redirect("/cart");
+    res.json({status:true})
   });
 });
 
